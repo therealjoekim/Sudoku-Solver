@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'solve_it' => "home#post"
+  get 'solve_it' => "home#results"
 
   root 'home#index'
 

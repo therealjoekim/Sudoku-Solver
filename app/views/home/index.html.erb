@@ -1,1 +1,15 @@
 <h1>Sodoku</h1>
+
+<%= form_for Solver.new, :url => solve_it_path do |f| %>
+  <%=f.text_field :num1, placeholder: "-" %>
+  <%=f.text_field :num2, placeholder: "-" %>
+  <%=f.text_field :num3, placeholder: "-" %>
+  <%=f.text_field :num4, placeholder: "-" %>
+  <%=f.text_field :num5, placeholder: "-" %>
+  <%=f.text_field :num6, placeholder: "-" %>
+  <%=f.text_field :num7, placeholder: "-" %>
+  <%=f.text_field :num8, placeholder: "-" %>
+  <%=f.text_field :num9, placeholder: "-" %>
+ <p> <%= f.submit "Solve it!"%> </p>
+
+<%end%>

@@ -1,9 +1,10 @@
 class HomeController < ApplicationController
 
   def index
+
   end
 
-  def post
+  def results
   end
 
 end
