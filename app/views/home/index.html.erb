@@ -1,0 +1,19 @@
+<h1>Sudoku</h1>
+
+<%= form_tag solve_it_path do  %>
+  <%n=1%>
+  <%9.times do%>
+  <p><%= number_field_tag n.to_s,nil, within: 0...10 %>
+  <%= number_field_tag (n+1).to_s,nil, within: 0...10 %>
+  <%= number_field_tag (n+2).to_s,nil, within: 0...10 %> |
+  <%= number_field_tag (n+3).to_s,nil, within: 0...10 %>
+  <%= number_field_tag (n+4).to_s,nil, within: 0...10 %>
+  <%= number_field_tag (n+5).to_s,nil, within: 0...10 %> |
+  <%= number_field_tag (n+6).to_s,nil, within: 0...10 %>
+  <%= number_field_tag (n+7).to_s,nil, within: 0...10 %>
+  <%= number_field_tag (n+8).to_s,nil, within: 0...10 %></p>
+  <%n+=9%>
+  <%end%>
+
+ <p> <%= submit_tag "Solve it!"%> </p>
+<%end%>
