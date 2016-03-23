@@ -1,3 +1,5 @@
 <% @answer.each do |row| %>
-<p><%= row %></p>
+  <p><% row.each do |num| %>
+    <%=num%>
+  <%end%></p>
 <%end%>
