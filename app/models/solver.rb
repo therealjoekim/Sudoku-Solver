@@ -18,11 +18,11 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def checker(num, line)
+  def self.checker(num, line)
     !line.include? num
   end
 
-  def build_single_possibility_hash(puzzle)
+  def self.build_single_possibility_hash(puzzle)
 
     transposed_puzzle = transpose_puzzle(puzzle)
     boxed_puzzle = box_puzzle(puzzle)
@@ -88,7 +88,7 @@ class Solver < ActiveRecord::Base
     single_possibility_hash
   end
 
-  def build_unique_hash(puzzle)
+  def self.build_unique_hash(puzzle)
 
     transposed_puzzle = transpose_puzzle(puzzle)
     boxed_puzzle = box_puzzle(puzzle)
@@ -158,7 +158,7 @@ class Solver < ActiveRecord::Base
 
 
 
-  def answer_pusher(puzzle, single_possibility_hash)
+  def self.answer_pusher(puzzle, single_possibility_hash)
 
     single_possibility_hash.each do |key, value|
       y = key[0]
@@ -174,7 +174,7 @@ class Solver < ActiveRecord::Base
 
 
 
-  def build_puzzle(string)
+  def self.build_puzzle(string)
     array = string.split('')
     array.map! do |x|
       if x != '-'
@@ -188,12 +188,12 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def transpose_puzzle(array)
+  def self.transpose_puzzle(array)
     array.transpose
   end
 
 
-  def solved?(board_1)
+  def self.solved?(board_1)
     board_2 = transpose_puzzle(board_1)
     board_3 = box_puzzle(board_1)
     counter = 1
@@ -227,14 +227,14 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def pretty_board(board)
+  def self.pretty_board(board)
     prettiness = board.map do |line|
       line.join(' ') << "\n"
     end
     prettiness.join('').to_s
   end
 
-  def box_puzzle(array)
+  def self.box_puzzle(array)
     boxy = array.map{|line| line.each_slice(3).to_a}
     final_box = boxy[0].zip(boxy[1],boxy[2])
     final_box += boxy[3].zip(boxy[4],boxy[5])
@@ -244,15 +244,15 @@ class Solver < ActiveRecord::Base
     end
   end
 
-  def hash_rows(hash)
+  def self.hash_rows(hash)
     (0..8).each_with_object([]) {|num, array| array[num] = hash.select{|k,v| k[0] == num}}
   end
 
-  def hash_cols(hash)
+  def self.hash_cols(hash)
     (0..8).each_with_object([]) {|num, array| array[num] = hash.select{|k,v| k[1] == num}}
   end
 
-  def hash_boxes(hash)
+  def self.hash_boxes(hash)
     boxes = []
     # box 0 = subhash of all elements where 0 < row < 2 and 0 < col < 2
     # box 1 = subhash of all elements where 0 < row < 2 and 3 < col < 5
@@ -272,7 +272,7 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def unique(array)
+  def self.unique(array)
     unique_possibility_hash = {}
     array.each do |hash|
       1.upto(9) do |num|
@@ -286,7 +286,7 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def array_of_blanks(puzzle)
+  def self.array_of_blanks(puzzle)
     blanks = []
     puzzle.each_with_index do |row, row_index|
       row.each_with_index do |cell, col_index|
@@ -298,7 +298,7 @@ class Solver < ActiveRecord::Base
     blanks
   end
 
-  def recursive_solve(puzzle, blanks)
+  def self.recursive_solve(puzzle, blanks)
     # base case
     if solved?(puzzle)
       p "solved"
@@ -333,7 +333,7 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def all_checks_ok(puzzle, num, row, col)
+  def self.all_checks_ok(puzzle, num, row, col)
 
     if checker(num, puzzle[row]) == false
       return false

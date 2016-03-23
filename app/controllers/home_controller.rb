@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def results
     sudoku_string = Solver.make_string(params)
-    @answer = sudoku_string
+    @answer = Solver.solve(sudoku_string)
   end
 
 end
