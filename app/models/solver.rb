@@ -1,5 +1,22 @@
 class Solver < ActiveRecord::Base
 
+  def self.make_string(params)
+    params.delete("utf8")
+    params.delete("authenticity_token")
+    params.delete("commit")
+    params.delete("controller")
+    params.delete("action")
+    sodoku_string = ""
+    params.values.each do |val|
+      if val == ""
+        sodoku_string << '-'
+      else
+        sodoku_string << val
+      end
+    end
+    return sodoku_string
+  end
+
 
   def checker(num, line)
     !line.include? num
@@ -345,7 +362,7 @@ class Solver < ActiveRecord::Base
   end
 
 
-  def solve(puzzle_string)
+  def self.solve(puzzle_string)
     puzzle = build_puzzle(puzzle_string)
     begin
       possibilities = build_single_possibility_hash(puzzle)
