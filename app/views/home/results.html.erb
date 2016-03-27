@@ -1,5 +1,11 @@
-<% @answer.each do |row| %>
-  <p><% row.each do |num| %>
-    <%=num%>
-  <%end%></p>
-<%end%>
+<table id="pretty-board">
+  <% @answer.each do |row| %>
+    <tr>
+        <% row.each do |num| %>
+          <td>
+            <%=num%>
+          </td>
+        <%end%>
+    </tr>
+  <%end%>
+</table>
