@@ -22,12 +22,12 @@ class Solver < ActiveRecord::Base
     !line.include? num
   end
 
-  def self.build_single_possibility_hash(puzzle)
+  def self.build_possibility_hash(puzzle, single_switch=true)
 
     transposed_puzzle = transpose_puzzle(puzzle)
     boxed_puzzle = box_puzzle(puzzle)
 
-    single_possibility_hash = {}
+    possibility_hash = {}
 
 
     puzzle.each_with_index do |row, row_index|
@@ -50,55 +50,25 @@ class Solver < ActiveRecord::Base
               possibilities << num
             end #if
           end #do
-
-          if possibilities.length == 1
-            single_possibility_hash[[row_index, col_index]] = possibilities[0]
+          if single_switch == true
+            if possibilities.length == 1
+              possibility_hash[[row_index, col_index]] = possibilities[0]
+            end
+          else
+            possibility_hash[[row_index, col_index]] = possibilities
           end
 
         end #if square = "-"
       end
     end
-    single_possibility_hash
-  end
-
-  def self.build_unique_hash(puzzle)
-
-    transposed_puzzle = transpose_puzzle(puzzle)
-    boxed_puzzle = box_puzzle(puzzle)
-
-    unique_possibility_hash = {}
-
-
-    puzzle.each_with_index do |row, row_index|
-      row.each_with_index do |square, col_index|
-
-        if square == "-"
-          possibilities = []
-
-          (1..9).each do |num|
-
-            can_put_in_row = checker(num, row)
-            can_put_in_col = checker(num, transposed_puzzle[col_index])
-
-            # determine box index to plug in to checker to check box
-            box_index = get_box_index(row_index, col_index)
-
-            can_put_in_box = checker(num, boxed_puzzle[box_index])
-
-            if can_put_in_box && can_put_in_col && can_put_in_row
-              possibilities << num
-            end #if
-          end #do
-
-          unique_possibility_hash[[row_index, col_index]] = possibilities
-
-        end #if square = "-"
-      end
+    if single_switch == true
+      return possibility_hash
+    else
+      unique_array = hash_rows(possibility_hash)
+      unique_array += hash_cols(possibility_hash)
+      unique_array += hash_boxes(possibility_hash)
+      return unique(unique_array)
     end
-    unique_array = hash_rows(unique_possibility_hash)
-    unique_array += hash_cols(unique_possibility_hash)
-    unique_array += hash_boxes(unique_possibility_hash)
-    final_hash = unique(unique_array)
   end
 
 
@@ -309,7 +279,7 @@ class Solver < ActiveRecord::Base
   def self.solve(puzzle_string)
     puzzle = build_puzzle(puzzle_string)
     begin
-      possibilities = build_single_possibility_hash(puzzle)
+      possibilities = build_possibility_hash(puzzle)
       # if there's anything in the possibilities hash
       if !possibilities.empty?
         answer_pusher(puzzle, possibilities)
@@ -318,7 +288,7 @@ class Solver < ActiveRecord::Base
           puts pretty_board(puzzle)
           return puzzle
         else
-          next_attempt = build_unique_hash(puzzle)
+          next_attempt = build_possibility_hash(puzzle, false)
           if !next_attempt.empty?
             answer_pusher(puzzle, next_attempt)
           end
