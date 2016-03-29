@@ -42,34 +42,7 @@ class Solver < ActiveRecord::Base
             can_put_in_col = checker(num, transposed_puzzle[col_index])
 
             # determine box index to plug in to checker to check box
-            if (0..2).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 0
-              when (3..5)
-                box_index = 1
-              when (6..8)
-                box_index = 2
-              end
-            elsif (3..5).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 3
-              when (3..5)
-                box_index = 4
-              when (6..8)
-                box_index = 5
-              end
-            elsif (6..8).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 6
-              when (3..5)
-                box_index = 7
-              when (6..8)
-                box_index = 8
-              end
-            end
+            box_index = get_box_index(row_index, col_index)
 
             can_put_in_box = checker(num, boxed_puzzle[box_index])
 
@@ -108,34 +81,7 @@ class Solver < ActiveRecord::Base
             can_put_in_col = checker(num, transposed_puzzle[col_index])
 
             # determine box index to plug in to checker to check box
-            if (0..2).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 0
-              when (3..5)
-                box_index = 1
-              when (6..8)
-                box_index = 2
-              end
-            elsif (3..5).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 3
-              when (3..5)
-                box_index = 4
-              when (6..8)
-                box_index = 5
-              end
-            elsif (6..8).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 6
-              when (3..5)
-                box_index = 7
-              when (6..8)
-                box_index = 8
-              end
-            end
+            box_index = get_box_index(row_index, col_index)
 
             can_put_in_box = checker(num, boxed_puzzle[box_index])
 
@@ -257,17 +203,12 @@ class Solver < ActiveRecord::Base
     # box 0 = subhash of all elements where 0 < row < 2 and 0 < col < 2
     # box 1 = subhash of all elements where 0 < row < 2 and 3 < col < 5
     # etc
-    boxes[0] = hash.select {|k,v| (0..2).cover?(k[0]) && (0..2).cover?(k[1])}
-    boxes[1] = hash.select {|k,v| (0..2).cover?(k[0]) && (3..5).cover?(k[1])}
-    boxes[2] = hash.select {|k,v| (0..2).cover?(k[0]) && (6..8).cover?(k[1])}
+    (0..8).each do |box_num|
+      boxes[box_num] = hash.select do |k,v|
+        box_num == get_box_index(k[0],k[1])
+      end
+    end
 
-    boxes[3] = hash.select {|k,v| (3..5).cover?(k[0]) && (0..2).cover?(k[1])}
-    boxes[4] = hash.select {|k,v| (3..5).cover?(k[0]) && (3..5).cover?(k[1])}
-    boxes[5] = hash.select {|k,v| (3..5).cover?(k[0]) && (6..8).cover?(k[1])}
-
-    boxes[6] = hash.select {|k,v| (6..8).cover?(k[0]) && (0..2).cover?(k[1])}
-    boxes[7] = hash.select {|k,v| (6..8).cover?(k[0]) && (3..5).cover?(k[1])}
-    boxes[8] = hash.select {|k,v| (6..8).cover?(k[0]) && (6..8).cover?(k[1])}
     boxes
   end
 
@@ -301,7 +242,6 @@ class Solver < ActiveRecord::Base
   def self.recursive_solve(puzzle, blanks)
     # base case
     if solved?(puzzle)
-      p "solved"
       return puzzle
     end
 
@@ -332,16 +272,8 @@ class Solver < ActiveRecord::Base
 
   end
 
-
-  def self.all_checks_ok(puzzle, num, row, col)
-
-    if checker(num, puzzle[row]) == false
-      return false
-    end
-    if checker(num, transpose_puzzle(puzzle)[col]) == false
-      return false
-    end
-    box_index = [
+  def self.get_box_index(row, col)
+    [
       [0, 0, 0, 1, 1, 1, 2, 2, 2],
       [0, 0, 0, 1, 1, 1, 2, 2, 2],
       [0, 0, 0, 1, 1, 1, 2, 2, 2],
@@ -352,6 +284,18 @@ class Solver < ActiveRecord::Base
       [6, 6, 6, 7, 7, 7, 8, 8, 8],
       [6, 6, 6, 7, 7, 7, 8, 8, 8]
     ][row][col]
+  end
+
+
+  def self.all_checks_ok(puzzle, num, row, col)
+
+    if checker(num, puzzle[row]) == false
+      return false
+    end
+    if checker(num, transpose_puzzle(puzzle)[col]) == false
+      return false
+    end
+    box_index = get_box_index(row, col)
 
     if  checker(num, box_puzzle(puzzle)[box_index]) == false
       return false
@@ -372,7 +316,6 @@ class Solver < ActiveRecord::Base
       else
         if solved?(puzzle)
           puts pretty_board(puzzle)
-          p "Yay! We did it!"
           return puzzle
         else
           next_attempt = build_unique_hash(puzzle)
