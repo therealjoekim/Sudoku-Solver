@@ -242,7 +242,6 @@ class Solver < ActiveRecord::Base
   def self.recursive_solve(puzzle, blanks)
     # base case
     if solved?(puzzle)
-      p "solved"
       return puzzle
     end
 
@@ -317,7 +316,6 @@ class Solver < ActiveRecord::Base
       else
         if solved?(puzzle)
           puts pretty_board(puzzle)
-          p "Yay! We did it!"
           return puzzle
         else
           next_attempt = build_unique_hash(puzzle)
