@@ -42,34 +42,7 @@ class Solver < ActiveRecord::Base
             can_put_in_col = checker(num, transposed_puzzle[col_index])
 
             # determine box index to plug in to checker to check box
-            if (0..2).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 0
-              when (3..5)
-                box_index = 1
-              when (6..8)
-                box_index = 2
-              end
-            elsif (3..5).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 3
-              when (3..5)
-                box_index = 4
-              when (6..8)
-                box_index = 5
-              end
-            elsif (6..8).cover?(row_index)
-              case col_index
-              when (0..2)
-                box_index = 6
-              when (3..5)
-                box_index = 7
-              when (6..8)
-                box_index = 8
-              end
-            end
+            box_index = get_box_index(row_index, col_index)
 
             can_put_in_box = checker(num, boxed_puzzle[box_index])
 
