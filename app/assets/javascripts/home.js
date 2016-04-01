@@ -15,10 +15,18 @@ $(document).ready (function(event){
       for(var row=0; row < response.length; row++){
         for(var col=0; col < response[row].length; col++){
           var selector = "tr:nth-child(" + (row + 1) + ") td:nth-child(" + (col + 1) + ") input";
-          $($(selector)[0]).val(response[row][col]);
+          var cell = $($(selector)[0]);
+          if (!cell.val()){
+            cell.val(response[row][col]);
+            cell.parent().addClass("flash");
+          }
         };
       };
     });
+  });
+
+  $("input").change(function(e){
+    $(this).parent().removeClass("flash");
   });
 
 });

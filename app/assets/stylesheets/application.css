@@ -13,3 +13,25 @@
  *= require_tree .
  *= require_self
  */
+
+.flash {
+  animation-name: flash;
+  animation-duration: .4s;
+  animation-timing-function: ease-out;
+  animation-iteration-count;
+  background-color: white;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #B1F0FF;
+    box-shadow: 0 0 10px 10px #B1F0FF;
+  }
+  5% {
+    background-color: #49DDFF;
+    box-shadow: 0 0 2px 2px #49DDFF;}
+  100% {
+    background-color: white;
+    box-shadow: 0 0 0 0 #ffffff;}
+  }
+}
