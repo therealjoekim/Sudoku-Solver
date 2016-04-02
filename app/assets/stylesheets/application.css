@@ -16,21 +16,21 @@
 
 .flash {
   animation-name: flash;
-  animation-duration: .4s;
+  animation-duration: .5s;
   animation-timing-function: ease-out;
-  animation-iteration-count;
+  animation-iteration-count: 1;
+}
+
+.flash input {
+  color: gray;
 }
 
 @keyframes flash {
   0% {
-    background-color: #B1F0FF;
-    box-shadow: 0 0 10px 10px #B1F0FF;
-  }
-  5% {
+
     background-color: #49DDFF;
-    box-shadow: 0 0 2px 2px #49DDFF;}
+  }
   100% {
     background-color: white;
-    box-shadow: 0 0 0 0 #ffffff;}
   }
 }

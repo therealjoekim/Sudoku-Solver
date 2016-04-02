@@ -5,20 +5,27 @@
 body {
   text-align: center;
   font-family: Avenir;
+  background-color: hsl(211, 5%, 60%);
+  background-image: url(image-path('img-noise-361x370.png'));
+}
+
+h1 {
+  font-size: 2.5em;
+  color: white;
+  text-shadow: 0 0 2px gray, 0px 1px 0px #c7c8ca, 0px 2px 0px #b1b3b6, 0px 3px 0px #9d9fa2, 0px 4px 0px #8a8c8e, 0px 5px 0px #77787b, 0px 6px 0px #636466, 0px 7px 0px #4d4d4f, 0px 8px 7px #001135, 0 20px 20px hsl(0, 0%, 15%);
 }
 
 table#input-board {
   margin: auto;
-  border-collapse: collapse;
-  border-spacing: 10px;
+  border-spacing: 0;
   padding: 0;
   border: 1px solid gray;
+  background-color: white;
 }
 th, td {
-    height: 50px;
-    width: 50px;
     text-align: center;
     background-color: transparent;
+    padding: 0;
 }
 
 #input-board input {
@@ -29,12 +36,23 @@ th, td {
   font-weight: bolder;
   text-align: center;
   background-color: transparent;
+  border: 1px solid black;
+  transition: background-color .3s;
+}
+
+#input-board .neutral input {
+  color: black;
+  transition: color .5s, box-shadow .5s;
+  box-shadow: none;
 }
 
 #input-board input:hover {
   background-color: #B1F0FF;
+  transition: background-color 0s;
 }
 
 #input-board input:focus {
   color: orange;
+  box-shadow: 0 0 3px 3px orange;
+  transition: box-shadow 0s;
 }

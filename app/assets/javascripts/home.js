@@ -3,6 +3,8 @@
 
 $(document).ready (function(event){
 
+  $("td").attr("class", "neutral");
+
   $("form").on("submit", function(e){
     e.preventDefault();
     var request = $.ajax({
@@ -18,7 +20,7 @@ $(document).ready (function(event){
           var cell = $($(selector)[0]);
           if (!cell.val()){
             cell.val(response[row][col]);
-            cell.parent().addClass("flash");
+            cell.parent().attr("class", "flash");
           }
         };
       };
@@ -26,7 +28,7 @@ $(document).ready (function(event){
   });
 
   $("input").change(function(e){
-    $(this).parent().removeClass("flash");
+    $(this).parent().attr("class", "neutral");
   });
 
 });
