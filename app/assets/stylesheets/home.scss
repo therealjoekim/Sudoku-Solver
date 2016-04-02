@@ -2,12 +2,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+body {
+  text-align: center;
+  font-family: Avenir;
+}
+
+table#input-board {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 10px;
+  padding: 0;
+  border: 1px solid gray;
 }
 th, td {
     height: 50px;
     width: 50px;
     text-align: center;
+    background-color: transparent;
+}
+
+#input-board input {
+  height: 50px;
+  width: 50px;
+  font-family: 'Waiting for the Sunrise';
+  font-size: 35px;
+  font-weight: bolder;
+  text-align: center;
+  background-color: transparent;
+}
+
+#input-board input:hover {
+  background-color: #B1F0FF;
+}
+
+#input-board input:focus {
+  color: orange;
 }

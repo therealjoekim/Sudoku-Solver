@@ -19,7 +19,6 @@
   animation-duration: .4s;
   animation-timing-function: ease-out;
   animation-iteration-count;
-  background-color: white;
 }
 
 @keyframes flash {
