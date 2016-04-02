@@ -19,24 +19,26 @@ table#input-board {
   margin: auto;
   border-spacing: 0;
   padding: 0;
-  border: 1px solid gray;
+  border-collapse: collapse;
   background-color: white;
+  box-shadow: 0 0 2px gray, 0px 1px 0px #c7c8ca, 0px 2px 0px #b1b3b6, 0px 3px 0px #9d9fa2, 0px 4px 0px #8a8c8e, 0px 5px 0px #77787b, 0px 6px 0px #636466, 0px 7px 0px #4d4d4f, 0px 8px 7px #001135;
 }
 th, td {
     text-align: center;
     background-color: transparent;
     padding: 0;
+    border: 1px solid gray;
 }
 
 #input-board input {
   height: 50px;
   width: 50px;
+  border: 0;
   font-family: 'Waiting for the Sunrise';
   font-size: 35px;
   font-weight: bolder;
   text-align: center;
   background-color: transparent;
-  border: 1px solid black;
   transition: background-color .3s;
 }
 
@@ -53,6 +55,7 @@ th, td {
 
 #input-board input:focus {
   color: orange;
+  outline: 0;
   box-shadow: 0 0 3px 3px orange;
   transition: box-shadow 0s;
 }
