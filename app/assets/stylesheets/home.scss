@@ -44,8 +44,8 @@ th, td {
 
 #input-board .neutral input {
   color: black;
-  transition: color .5s, box-shadow .5s;
   box-shadow: none;
+  transition: color .5s, box-shadow .5s;
 }
 
 #input-board input:hover {
