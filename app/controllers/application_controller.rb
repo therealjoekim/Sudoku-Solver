@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :default_headers
+  before_filter :allow_iframe_requests
 
-  def default_headers
-  	headers['X-Frame-Options'] = 'SAMEORIGIN'
+  def allow_iframe_requests
+  	response.headers.delete('X-Frame-Options')
   end
+
 end
