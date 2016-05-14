@@ -27,7 +27,7 @@
 
 @keyframes flash {
   0% {
-    background-color: #49DDFF;
+    background-color: #a8a8a8;
   }
   100% {
     background-color: white;
