@@ -21,4 +21,9 @@
 <br>
 <%= submit_tag "Solve"%>
 <%end%>
-
+<input type="button" onClick="history.go(0)" value="Reset">
+<div class="container">
+  <% flash.each do | name,msg | %>
+    <%= content_tag :div, msg, class: [:alert, alert_for(name)] %>
+  <% end %>
+</div>
